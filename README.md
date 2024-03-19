@@ -1,4 +1,10 @@
-# ExplaiNN
+# My master Thesis
+
+I am widely using ExplaiNN, and will incorporate Logic Explained Network architechture to look at explainability of neural networks.
+
+Below the README for ExplaiNN:
+The work is under progress, with a deadline mid december 2024.
+
 
 <img src="./data/figs/ExplaiNN.png"  height="55%" width="55%" />
 
