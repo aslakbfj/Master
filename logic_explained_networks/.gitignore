@@ -1,0 +1,115 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# scikit-learn specific
+doc/_build/
+doc/auto_examples/
+doc/modules/generated/
+doc/datasets/generated/
+
+# Distribution / packaging
+
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+doc/_build/
+doc/_templates/
+doc/_static/
+doc/generated/
+
+# PyBuilder
+target/
+*.xml
+*.iml
+.idea/
+*.gz
+data/cifar-10-batches-py/
+tests/net
+data/CUB_200_2011/
+examples/.ipynb_checkpoints/
+experiments/MNIST/.ipynb_checkpoints/
+experiments/MNIST/net
+data/samples_cub200_fine_tuning.json
+data/samples_cub200_training.json
+*.tgz
+experiments/results/
+data/MNIST_EVEN_ODD/
+data/Shapes/
+data/mimic-ii/
+data/vdem/
+*.pth
+*.zip
+experiments/.ipynb_checkpoints/
+req.txt
+data/celldiff/
+lens/models/ext_models/deep_red/logs/nn_logs/
+*.index
+*.data-00000-of-00001
+*.meta
+*.pkl
+lens/models/ext_models/deep_red/data/
+lens/models/ext_models/deep_red/results/
+lens/models/ext_models/deep_red_old/logs/
+lens/models/ext_models/deep_red_old/
+lens/models/ext_models/deep_red/.vscode/
+experiments/results/cub/data/
+experiments/results/cub/models/
+lens/models/concept_extractor/50_epochs_complete_training/
+req2.txt
+experiments/old_results/
+
+
+old/
+*.js
+*.less
+
+/data
+
