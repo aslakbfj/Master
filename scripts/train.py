@@ -183,7 +183,7 @@ def cli(**args):
     train_seqs, train_labels, _ = get_seqs_labels_ids(args["training_file"],
                                                       args["debugging"],
                                                       args["rev_complement"],
-                                                      args["input_length"])
+                                                      args["input_length"]) 
     test_seqs, test_labels, _ = get_seqs_labels_ids(args["validation_file"],
                                                     args["debugging"],
                                                     args["rev_complement"],

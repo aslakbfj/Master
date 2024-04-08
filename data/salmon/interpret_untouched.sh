@@ -8,6 +8,8 @@
 #SBATCH --gres=gpu:1                        # Use one GPU
 #SBATCH --output=./slurm_out/interpret_%j_%a.log # Stdout and stderr file
 
+echo "NOT FINISHED AT ALL, NOT EVEN TOUCHED SINCE COPY"
+
 
 source activate explainn
 
@@ -28,7 +30,7 @@ echo "Cluster the filters (i.e., remove redundancy)"
 PY_SCRIPT=../../scripts/utils/meme2clusters.py
 $PY_SCRIPT -c 8 -o ${OUT_DIR}/clusters ${OUT_DIR}/filters.meme
 
-echo "Obtain a logo for each cluster in PNG format (option “-f”)"
+echo "Obtain a logo for each cluster in PNG format (option ï¿½-fï¿½)"
 PY_SCRIPT=../../scripts/utils/meme2logo.py
 ${PY_SCRIPT} -c 8 -f png -o ${OUT_DIR}/logos ${OUT_DIR}/clusters/clusters.meme
 
