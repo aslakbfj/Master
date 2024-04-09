@@ -1,7 +1,7 @@
 
 
-# Large .tsv files in data folder
-data/salmon/*.tsv
+# All .tsv files
+*.tsv
 
 # Everything below is from ExplaiNN repo
 

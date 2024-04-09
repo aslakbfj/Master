@@ -3,7 +3,7 @@
 #SBATCH --nodes=1			                # Use 1 node
 #SBATCH --ntasks=8			                # 1 core (CPU)
 #SBATCH --job-name=explainn_salmon          # Name of job
-#SBATCH --mem=30G 			                # Default memory per CPU is 3GB
+#SBATCH --mem=80G 			                # Default memory per CPU is 3GB
 #SBATCH --partition=gpu                     # Use GPU partition
 #SBATCH --gres=gpu:1                        # Use one GPU
 #SBATCH --output=./slurm_explainn/explainn_salmon%j_%a.log # Stdout and stderr file
