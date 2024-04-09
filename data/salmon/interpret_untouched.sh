@@ -16,13 +16,13 @@ OUT_DIR=$SCRATCH/AS-TAC/ExplaiNN
 echo "test?"
 PY_SCRIPT=../../scripts/test.py
 ${PY_SCRIPT} -o ${OUT_DIR} ${OUT_DIR}/model_epoch_best_6.pth \
-${OUT_DIR}/parameters-train.py.json ./AS-TAC_1000bp.tsv.validation
+${OUT_DIR}/parameters-train.py.json ./AS-TAC_1000bp.validation.tsv
 
 echo "Interpret the model"
 PY_SCRIPT=../../scripts/interpret.py
 ${PY_SCRIPT} -t -o ${OUT_DIR} --correlation 0.75 --num-well-pred-seqs 1000 \
 ${OUT_DIR}/model_epoch_best_6.pth ${OUT_DIR}/parameters-train.py.json \
-./AS-TAC_1000bp.tsv.train
+./AS-TAC_1000bp.train.tsv
 
 echo "Cluster the filters (i.e., remove redundancy)"
 PY_SCRIPT=../../scripts/utils/meme2clusters.py
