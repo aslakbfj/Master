@@ -12,12 +12,12 @@
 source activate explainn
 
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
-PY_SCRIPT=../scripts/train.py
+PY_SCRIPT=../../scripts/train.py
 OUT_DIR=$SCRATCH/AS-TAC/ExplaiNN/
 
 ${PY_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 --patience 5 \
 --num-epochs 10 \
---num-units 300 AtlanticSalmon_bins.train.tsv \
-AtlanticSalmon_bins.validation.tsv
+--num-units 300 AS-TAC_1000bp.train.tsv \
+AS-TAC_1000bp.validation.tsv
 
