@@ -5,7 +5,7 @@
 #SBATCH --array=1-2%2
 #SBATCH --time=01:00:00
 #SBATCH --mem=80GB
-
+#SBATCH --output=./slurm_explainn/eoptimize_units%j_%a.log # Stdout and stderr file
 
 source activate explainn
 # Liste over num-units verdier du vil teste
