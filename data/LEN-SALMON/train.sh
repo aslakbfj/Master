@@ -22,6 +22,3 @@ ${PY_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 AS-TAC_1000bp.validation.tsv
 
 echo "training done"
-
-
-
