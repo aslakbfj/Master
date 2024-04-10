@@ -4,6 +4,7 @@ import click
 import pandas as pd
 import matplotlib.pyplot as plt
 
+source activate explainn
 @click.command()
 @click.option('-i', '--input', 'metrics_csv', type=click.Path(exists=True), required=True, help='Input CSV file')
 @click.option('-o', '--output', type=click.Path(), required=True, help='Output plot file')

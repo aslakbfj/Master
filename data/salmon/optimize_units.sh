@@ -1,25 +1,25 @@
 #!/bin/bash
-#SBATCH --job-name=TestJob
-#SBATCH --output=TestJob_%A_%a.out
-#SBATCH --error=TestJob_%A_%a.err
-#SBATCH --array=1-2%2
-#SBATCH --time=10:00:00
+#SBATCH --job-name=optimize_units
+#SBATCH --output=optimize_units_%A_%a.out
+#SBATCH --error=optimize_units_%A_%a.err
+#SBATCH --array=1-10%10
+#SBATCH --time=48:00:00
 #SBATCH --mem=80GB
 #SBATCH --partition=gpu                     # Use GPU partition
 #SBATCH --gres=gpu:1                        # Use one GPU
-#SBATCH --output=./slurm_explainn/eoptimize_units%j_%a.log # Stdout and stderr file
-#SBATCH --output=./slurm_explainn/eoptimize_units%j_%a.err # Stdout and stderr file
+#SBATCH --output=./slurm_explainn/optimize_units%j_%a.log # Stdout and stderr file
+#SBATCH --output=./slurm_explainn/optimize_units%j_%a.err # Stdout and stderr file
 
 source activate explainn
 # Liste over num-units verdier du vil teste
 # Adjust this list based on the number of array jobs you want to run
-NUM_UNITS_LIST=(200 400)
+NUM_UNITS_LIST=(100 150 200 250 300 350 400 450 500 600)
 
 # Delen av koden som ikke endrer seg
 INPUT_LENGTH=1000
 CRITERION=bcewithlogits
-PATIENCE=0
-NUM_EPOCHS=2
+PATIENCE=6
+NUM_EPOCHS=100
 TRAIN_TSV=AS-TAC_1000bp.train.tsv
 VALIDATION_TSV=AS-TAC_1000bp.validation.tsv
 TRAIN_SCRIPT=../../scripts/train.py
