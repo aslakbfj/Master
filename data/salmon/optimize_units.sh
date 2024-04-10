@@ -6,6 +6,8 @@
 #SBATCH --time=01:00:00
 #SBATCH --mem=80GB
 
+
+source activate explainn
 # Liste over num-units verdier du vil teste
 # Adjust this list based on the number of array jobs you want to run
 NUM_UNITS_LIST=(200 400)
