@@ -3,9 +3,10 @@
 #SBATCH --output=TestJob_%A_%a.out
 #SBATCH --error=TestJob_%A_%a.err
 #SBATCH --array=1-2%2
-#SBATCH --time=01:00:00
+#SBATCH --time=10:00:00
 #SBATCH --mem=80GB
 #SBATCH --output=./slurm_explainn/eoptimize_units%j_%a.log # Stdout and stderr file
+#SBATCH --output=./slurm_explainn/eoptimize_units%j_%a.err # Stdout and stderr file
 
 source activate explainn
 # Liste over num-units verdier du vil teste
@@ -16,7 +17,7 @@ NUM_UNITS_LIST=(200 400)
 INPUT_LENGTH=1000
 CRITERION=bcewithlogits
 PATIENCE=0
-NUM_EPOCHS=1
+NUM_EPOCHS=2
 TRAIN_TSV=AS-TAC_1000bp.train.tsv
 VALIDATION_TSV=AS-TAC_1000bp.validation.tsv
 TRAIN_SCRIPT=../../scripts/train.py
@@ -46,3 +47,5 @@ PTH_FILE=$(ls ${OUT_DIR}/*.pth)
 ${TEST_SCRIPT} -o ${OUT_DIR} ${PTH_FILE} \
 ${OUT_DIR}/parameters-train.py.json ./AS-TAC_1000bp.validation.tsv
 
+echo "should be done now"
+echo "contents of OUT_DIR: $(ls ${OUT_DIR})"
