@@ -5,6 +5,8 @@
 #SBATCH --array=1-2%2
 #SBATCH --time=10:00:00
 #SBATCH --mem=80GB
+#SBATCH --partition=gpu                     # Use GPU partition
+#SBATCH --gres=gpu:1                        # Use one GPU
 #SBATCH --output=./slurm_explainn/eoptimize_units%j_%a.log # Stdout and stderr file
 #SBATCH --output=./slurm_explainn/eoptimize_units%j_%a.err # Stdout and stderr file
 
