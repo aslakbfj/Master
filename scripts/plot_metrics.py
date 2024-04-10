@@ -5,9 +5,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 @click.command()
-@click.argument('metrics_csv', type=click.Path(exists=True))
-
-def plot_metrics(metrics_csv):
+@click.option('-i', '--input', 'metrics_csv', type=click.Path(exists=True), required=True, help='Input CSV file')
+@click.option('-o', '--output', type=click.Path(), required=True, help='Output plot file')
+def plot_metrics(metrics_csv, output):
     # Load the metrics into a pandas DataFrame
     df = pd.read_csv(metrics_csv)
 
@@ -28,7 +28,7 @@ def plot_metrics(metrics_csv):
     plt.ylabel('Average AUCPR')
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig(output)
 
 if __name__ == "__main__":
     plot_metrics()

@@ -3,7 +3,7 @@
 #SBATCH --nodes=1			                # Use 1 node
 #SBATCH --ntasks=8			                # 1 core (CPU)
 #SBATCH --job-name=plot_metrics             # Name of job
-#SBATCH --mem=10G 			                # Default memory per CPU is 3GB
+#SBATCH --mem=20G 			                # Default memory per CPU is 3GB
 #SBATCH --output=./slurm_explainn/plot_metrics%j_%a.log # Stdout and stderr file
 
 
@@ -26,3 +26,4 @@ done
 
 # Plot the performance metrics
 PY_SCRIPT=../../scripts/plot_metrics.py
+${PY_SCRIPT} -i metrics.csv -o ./omptimize_units_metrics.png
