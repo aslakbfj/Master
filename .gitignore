@@ -1,7 +1,10 @@
 
 
-# All .tsv files
-*.tsv
+# 
+*.tsv # TSV files
+*.log # Log files
+*.err # Log files
+*.pth # PyTorch model files
 
 # Everything below is from ExplaiNN repo
 
