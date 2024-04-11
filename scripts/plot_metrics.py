@@ -13,21 +13,21 @@ def plot_metrics(metrics_csv, output):
     # Load the metrics into a pandas DataFrame
     df = pd.read_csv(metrics_csv)
 
-    # Calculate the average AUCROC and AUCPR for each num_units
-    df_grouped = df.groupby('num_units').mean()
+    # Create a new figure
+    plt.figure()
 
-    # Plot the averages
-    plt.figure(figsize=(10, 5))
+    # Plot AUCROC
+    plt.plot(df['num_units'], df['AUCROC'], label='AUCROC')
 
-    plt.subplot(1, 2, 1)
-    plt.plot(df_grouped.index, df_grouped['AUCROC'])
+    # Plot AUCPR
+    plt.plot(df['num_units'], df['AUCPR'], label='AUCPR')
+
+    # Add a legend
+    plt.legend()
+
+    # Add labels
     plt.xlabel('num_units')
-    plt.ylabel('Average AUCROC')
-
-    plt.subplot(1, 2, 2)
-    plt.plot(df_grouped.index, df_grouped['AUCPR'])
-    plt.xlabel('num_units')
-    plt.ylabel('Average AUCPR')
+    plt.ylabel('Score')
 
     plt.tight_layout()
     plt.savefig(output)
