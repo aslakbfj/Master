@@ -8,7 +8,7 @@
 #SBATCH --partition=gpu                     # Use GPU partition
 #SBATCH --gres=gpu:1                        # Use one GPU
 #SBATCH --output=./slurm_explainn/optimize_units%j_%a.log # Stdout and stderr file
-#SBATCH --output=./slurm_explainn/optimize_units%j_%a.err # Stdout and stderr file
+#SBATCH --error=./slurm_explainn/optimize_units%j_%a.err # Stdout and stderr file
 
 source activate explainn
 # Liste over num-units verdier du vil teste

@@ -5,9 +5,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 source activate explainn
+
 @click.command()
 @click.option('-i', '--input', 'metrics_csv', type=click.Path(exists=True), required=True, help='Input CSV file')
 @click.option('-o', '--output', type=click.Path(), required=True, help='Output plot file')
+
+# a click option for and ID string that is used to identify the correct 
 def plot_metrics(metrics_csv, output):
     # Load the metrics into a pandas DataFrame
     df = pd.read_csv(metrics_csv)

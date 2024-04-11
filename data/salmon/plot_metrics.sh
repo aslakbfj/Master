@@ -15,7 +15,7 @@ source activate explainn
 
 
 echo "num_units,AUCROC,AUCPR" > metrics.csv
-for dir in $SCRATCH/AS-TAC/ExplaiNN/omptimize_units_*
+for dir in $SCRATCH/AS-TAC/ExplaiNN/omptimize_units_${1}*
 do
     num_units=$(basename $dir | cut -d'_' -f3)
     AUCROC=$(awk -F'\t' 'NR==2 {print $2}' $dir/performance-metrics.tsv)
