@@ -11,11 +11,9 @@ source activate explainn
 
 
 # Awk the performance metrics in one file
-#awk 'FNR==1 && NR!=1{next;}{print}' ${OUT_DIR}/*.metrics > ${OUT_DIR}/all_metrics.tsv
-
 echo "create metrics.csv"
 echo "num_units,AUCROC,AUCPR" > metrics.csv
-for dir in $SCRATCH/AS-TAC/ExplaiNN/omptimize_units_${1}*
+for dir in $SCRATCH/AS-TAC/ExplaiNN/optimize_units_${1}*
 do
     num_units=$(basename $dir | cut -d'_' -f4)
     AUCROC=$(awk -F'\t' 'NR==2 {print $2}' $dir/performance-metrics.tsv)
@@ -26,4 +24,4 @@ done
 echo "plot the metrics"
 # Plot the performance metrics
 PY_SCRIPT=../../scripts/plot_metrics.py
-${PY_SCRIPT} -i metrics.csv -o ./omptimize_units_metrics.png
+${PY_SCRIPT} -i metrics.csv -o ./optimize_units_metrics.png
