@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=optimize_units
-#SBATCH --output=optimize_units_%j_%a.out
-#SBATCH --error=optimize_units_%j_%a.err
+#SBATCH --output=optimize_units_%A_%a.out
+#SBATCH --error=optimize_units_%A_%a.err
 #SBATCH --array=1-10%10
 #SBATCH --time=48:00:00
 #SBATCH --mem=80GB
