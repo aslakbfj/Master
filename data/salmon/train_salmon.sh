@@ -11,21 +11,17 @@
 
 source activate explainn
 
-echo $SCRATCH
-echo "Train (same parameters as in the preprint; it can take a few hours) and test"
-PY_SCRIPT=../../scripts/train.py
+echo "num-units as argument!"
+TRAIN_SCRIPT=../../scripts/train.py
+TEST_SCRIPT=../../scripts/test.py
 OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${SLURM_ARRAY_JOB_ID}
 
-${PY_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
+echo "Train (same parameters as in the preprint; it can take a few hours) and test"
+${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 --patience 10 \
 --num-epochs 50 \
 --batch-size 200 \
---num-units $1 AS-TAC_1000bp.train.tsv \
+--num-units ${1} AS-TAC_1000bp.train.tsv \
 AS-TAC_1000bp.validation.tsv
 
 echo "training done"
-
-echo "testing..."
-
-
-
