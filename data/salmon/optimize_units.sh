@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=optimize_units
-#SBATCH --array=1-51%10
+#SBATCH --array=1-41%10
 #SBATCH --time=72:00:00
 #SBATCH --mem=60GB
 #SBATCH --partition=gpu                     # Use GPU partition
@@ -23,7 +23,7 @@ TEST_SCRIPT=../../scripts/test.py
 
 # Liste over num-units verdier du vil teste
 # Adjust this list based on the number of array jobs you want to run
-NUM_UNITS_LIST=($(seq 10 10 500))
+NUM_UNITS_LIST=(1 $(seq 5 5 200))
 
 # Get the correct num-units value based on the array job index
 NUM_UNITS=${NUM_UNITS_LIST[$SLURM_ARRAY_TASK_ID-1]}
