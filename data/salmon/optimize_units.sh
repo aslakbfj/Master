@@ -13,7 +13,7 @@ source activate explainn
 # Delen av koden som ikke endrer seg
 INPUT_LENGTH=1000
 CRITERION=BCEWithLogits
-LEARNING_RATE=0.004
+LEARNING_RATE=0.001
 PATIENCE=10
 NUM_EPOCHS=100
 TRAIN_TSV=AS-TAC_1000bp.train.tsv
