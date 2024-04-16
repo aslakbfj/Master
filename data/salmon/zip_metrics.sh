@@ -17,4 +17,8 @@ do
     AUCROC=$(awk -F'\t' 'NR==2 {print $0}' $dir/performance-metrics.tsv)
     AUCPR=$(awk -F'\t' 'NR==3 {print $0}' $dir/performance-metrics.tsv)
     echo "$num_units,$AUCROC,$AUCPR" >> all_metrics.csv
+
+
 done
+
+#find $SCRATCH/AS-TAC/ExplaiNN/optimize_units_14452711_* -name "performance-metrics.tsv" -type f -exec zip performance-metrics.zip {} +
