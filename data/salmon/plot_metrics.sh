@@ -13,6 +13,7 @@ source activate explainn
 # Awk the performance metrics in one file
 echo "create metrics.csv"
 echo "num_units,AUCROC,AUCPR" > metrics.csv
+# input argument the job ID in order to choose comparable models!
 for dir in $SCRATCH/AS-TAC/ExplaiNN/optimize_units_${1}*
 do
     num_units=$(basename $dir | cut -d'_' -f4)
@@ -24,4 +25,4 @@ done
 echo "plot the metrics"
 # Plot the performance metrics
 PY_SCRIPT=../../scripts/plot_metrics.py
-${PY_SCRIPT} -i metrics.csv -o ./optimize_units_metrics.png
+${PY_SCRIPT} -i metrics.csv -o ./optimize_units_metrics_${1}.png
