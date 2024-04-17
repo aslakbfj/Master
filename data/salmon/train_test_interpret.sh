@@ -14,7 +14,7 @@ source activate explainn
 # num-units as argument!
 TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
-OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${SLURM_ARRAY_JOB_ID}"
+OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${SLURM_JOB_ID}"
 INTERPRET_SCRIPT=../../scripts/interpret.py
 
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
