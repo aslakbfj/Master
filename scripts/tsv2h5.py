@@ -79,7 +79,7 @@ def cli(**args):
 
     # split data into train, test, valid
     train_seq_05, valid_seq_05, train_feat_05, valid_feat_05 = train_test_split(seqs, features, test_size=0.05, random_state=42)
-    train_seq_05, test_seq_05, train_feat_05, test_feat_05 = train_test_split(train_seq, train_feat, test_size=0.052, random_state=42)
+    train_seq_05, test_seq_05, train_feat_05, test_feat_05 = train_test_split(train_seq_05, train_feat_05, test_size=0.052, random_state=42)
 
     # create .h5 file
     with h5py.File(args['output'] + "AS-TAC_05.h5", 'w') as hf:
@@ -102,7 +102,7 @@ def cli(**args):
 
     # split data into train_10, test_10, valid_10 with a 10 % split
     train_seq_10, valid_seq_10, train_feat_10, valid_feat_10 = train_test_split(seqs, features, test_size=0.1, random_state=42)
-    train_seq_10, test_seq_10, train_feat_10, test_feat_10 = train_test_split(train_seq, train_feat, test_size=0.1, random_state=42)
+    train_seq_10, test_seq_10, train_feat_10, test_feat_10 = train_test_split(train_seq_10, train_feat_10, test_size=0.1, random_state=42)
 
     # create .h5 file
     with h5py.File(args['output'] + "AS-TAC_10.h5", 'w') as hf:
@@ -117,7 +117,7 @@ def cli(**args):
 
     # Remove train_10, valid_10, test_10 to save memory
     del train_seq_10, valid_seq_10, test_seq_10, train_feat_10, valid_feat_10, test_feat_10
-
+    del seqs, features
 
     ###################################################################
     ##########  MAKE A 10 % SPLIT WITH 21 25 SEPARATED       ###########
@@ -140,7 +140,7 @@ def cli(**args):
     seqs_excluded_21_25_10 = np.array([dna_one_hot(str(seq)) for seq in seqs_excluded_21_25_10])
 
     # split data into train_21_25_10, test_21_25_10
-    train_seq_21_25_10, test_seq_21_25_10, train_feat_21_25_10, test_feat_21_25_10 = train_test_split(seqs_excluded_21_25_10, features_excluded_21_25_10, test_size=0.05, random_state=42)
+    train_seq_21_25_10, test_seq_21_25_10, train_feat_21_25_10, test_feat_21_25_10 = train_test_split(seqs_excluded_21_25_10, features_excluded_21_25_10, test_size=0.1, random_state=42)
     valid_seq_21_25_10, valid_feat_21_25_10 = seqs_21_25_10, features_21_25_10
 
     # create .h5 file
