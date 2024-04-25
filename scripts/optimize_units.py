@@ -39,7 +39,7 @@ CONTEXT_SETTINGS = {
     type=click.Path(exists=True, resolve_path=True),
 )
 @click.argument(
-    "output-dir",
+    "output",
     type=click.Path(resolve_path=True),
 )
 
@@ -175,7 +175,7 @@ def cli(**args):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     
     # retrieve the slurm job number
-    out_job = args['output-dir']
+    out_job = args["output"]
     os.makedirs(out_job)
 
 
