@@ -215,7 +215,7 @@ def cli(**args):
                                                     single_folder, name_ind, verbose=True, trim_weights=False,
                                                     patience=args["patience"], checkpoint=args["checkpoint"])
     
-    tools.showPlot(train_error, test_error, "Loss trend", "Loss", save=single_folder + "/loss_trend.png")
+    tools.showPlot(train_error, test_error, title="Loss trend", save=single_folder + "/loss_trend.png")
 
 
     ###### OPTIMIZE UNITS ######

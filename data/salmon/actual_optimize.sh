@@ -2,7 +2,7 @@
 
 #SBATCH --nodes=1			                # Use 1 node
 #SBATCH --ntasks=8			                # 1 core (CPU)
-#SBATCH --job-name=train_explainn           # Name of job
+#SBATCH --job-name=opt_units                # Name of job
 #SBATCH --mem=80G 			                # Default memory per CPU is 3GB
 #SBATCH --partition=gpu                     # Use GPU partition
 #SBATCH --gres=gpu:1                        # Use one GPU
