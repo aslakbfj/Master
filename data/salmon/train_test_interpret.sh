@@ -20,11 +20,12 @@ INTERPRET_SCRIPT=../../scripts/interpret.py
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
 
 ${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
---patience 10 \
---num-epochs 50 \
+--patience 15 \
+--num-epochs 200 \
+--lr 0.001 \
 --batch-size 200 \
---num-units ${1} AS-TAC_1000bp.train.tsv \
-AS-TAC_1000bp.validation.tsv
+--num-units ${1} AS-TAC_1000bp_no21_no25.tsv \
+AS-TAC_1000bp_21_25.tsv
 
 echo "training done"
 
