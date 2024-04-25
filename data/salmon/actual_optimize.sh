@@ -22,7 +22,7 @@ ${OPTIMIZE_SCRIPT} ${H5_FILE} ${OUT_DIR} --input-length 1000 --criterion bcewith
 --batch-size 200 \
 --num-units 100  \
 -t \
---lr 0.001
+--lr 0.01
 
 
 
