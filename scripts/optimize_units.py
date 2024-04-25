@@ -181,8 +181,8 @@ def cli(**args):
 
     
     # Parameters
-    num_epochs = args["num-epochs"]
-    batch_size = args["batch-size"]
+    num_epochs = args["num_epochs"]
+    batch_size = args["batch_size"]
     learning_rate = args["lr"]
 
 
@@ -191,10 +191,10 @@ def cli(**args):
 
     target_labels = [i.decode("utf-8") for i in target_labels]
 
-    num_cnns = args["num-units"]
-    input_length = args["input-length"]
+    num_cnns = args["num_units"]
+    input_length = args["input_length"]
     num_classes = len(target_labels)
-    filter_size = args["filter-size"]
+    filter_size = args["filter_size"]
 
     # cnn_deep = networks.ConvNetDeep(num_classes)
     # cnn_shallow = networks.ConvNetShallow(num_classes)
