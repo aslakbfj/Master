@@ -28,7 +28,7 @@ from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
 @click.option('-o', '--output', type=click.Path(), required=True, help='Output file')
 @click.option('-b', '--bed_file', type=click.Path(exists=True), required=True, help='Input target label file')
 
-def cli():
+def cli(**args):
     # Load the metrics into a pandas DataFrame
     
     # Load the tsv file
