@@ -28,7 +28,7 @@ from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
 @click.option('-o', '--output', type=click.Path(), required=True, help='Output file')
 @click.option('-b', '--bed_file', type=click.Path(exists=True), required=True, help='Input target label file')
 
-def tsv2h5():
+def cli():
     # Load the metrics into a pandas DataFrame
     
     # Load the tsv file
@@ -59,7 +59,7 @@ def tsv2h5():
 
 
     # create .h5 file
-    with h5py.File(args['output'], 'w') as hf:
+    with h5py.File(args['output'] + "AS-TAC.h5", 'w') as hf:
         hf.create_dataset('train_in', data=train_seq)
         hf.create_dataset('valid_in', data=valid_seq)
         hf.create_dataset('test_in', data=test_seq)
@@ -69,4 +69,4 @@ def tsv2h5():
         hf.create_dataset('target_labels', data=labels)
 
 if __name__ == "__main__":
-    tsv2h5()
+    cli()
