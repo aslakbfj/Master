@@ -66,6 +66,7 @@ def load_datas(path_h5, batch_size, num_workers, shuffle):
 
     data = h5py.File(path_h5, 'r')
     dataset = {}
+    
     dataloaders = {}
     # Train data
     dataset['train'] = torch.utils.data.TensorDataset(torch.Tensor(np.array(data['train_in'])),
@@ -127,7 +128,7 @@ def load_single_data(path_h5, batch_size, num_workers, shuffle):
 
     all_dataset = torch.utils.data.TensorDataset(res, res_lab)
     dataloader  = torch.utils.data.DataLoader(all_dataset,
-                                                  batch_size=128, shuffle=False,
+                                                  batch_size=batch_size, shuffle=False,
                                                   num_workers=0)
 
     return dataloader, res, res_lab

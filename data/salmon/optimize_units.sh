@@ -5,12 +5,15 @@
 #SBATCH --mem=60GB
 #SBATCH --partition=gpu                     # Use GPU partition
 #SBATCH --gres=gpu:1                        # Use one GPU
-#SBATCH --output=./slurm_explainn/optimize_units%j_%a.log # Stdout and stderr file
-#SBATCH --error=./slurm_explainn/optimize_units%j_%a.err # Stdout and stderr file
+#SBATCH --output=./slurm_explainn/optimize_units_%j/%a.log # Stdout and stderr file
+#SBATCH --error=./slurm_explainn/optimize_units_%j/%a.err # Stdout and stderr file
+
+#create slurm output folder
+mkdir -p ./slurm_explainn/optimize_units_${SLURM_JOB_ID}
 
 source activate explainn
 
-# Delen av koden som ikke endrer seg
+# Variables
 INPUT_LENGTH=1000
 CRITERION=BCEWithLogits
 LEARNING_RATE=0.001
@@ -30,7 +33,7 @@ NUM_UNITS=${NUM_UNITS_LIST[$SLURM_ARRAY_TASK_ID-1]}
 echo "num-units: ${NUM_UNITS}"  
 
 # Create and set output directory
-OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/optimize_units_${SLURM_ARRAY_JOB_ID}_${NUM_UNITS}"
+OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/optimize_units_${SLURM_JOB_ID}/num_cnns_${NUM_UNITS}"
 mkdir -p ${OUT_DIR}
 
 # Run script

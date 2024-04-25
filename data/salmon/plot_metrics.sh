@@ -14,7 +14,7 @@ source activate explainn
 echo "create metrics.csv"
 echo "num_units,AUCROC,AUCPR" > metrics.csv
 # input argument the job ID in order to choose comparable models!
-for dir in $SCRATCH/AS-TAC/ExplaiNN/optimize_units_${1}*
+for dir in $SCRATCH/AS-TAC/ExplaiNN/optimize_units_${1}/*
 do
     num_units=$(basename $dir | cut -d'_' -f4)
     AUCROC=$(awk -F'\t' 'NR==2 {print $2}' $dir/performance-metrics.tsv)
