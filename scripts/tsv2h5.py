@@ -51,12 +51,12 @@ def cli(**args):
     features = df.iloc[:, 1:]
 
     # one hot encode sequences
-    seqs_one_hot = np.array([dna_one_hot(str(seq)) for seq in seqs])
+    seqs = np.array([dna_one_hot(str(seq)) for seq in seqs])
 
     # split data into train, test, valid
     train_seq, test_seq, train_feat, test_feat = train_test_split(seqs, features, test_size=0.20, random_state=42)
     train_seq, valid_seq, train_feat, valid_feat = train_test_split(train_seq, train_feat, test_size=0.25, random_state=42)
-
+    
 
     # create .h5 file
     with h5py.File(args['output'] + "AS-TAC.h5", 'w') as hf:
