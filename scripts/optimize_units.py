@@ -204,7 +204,7 @@ def cli(**args):
     criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(explainn.parameters(), lr=learning_rate)
 
-    single_folder = out_job + "/single_100_units"
+    single_folder = out_job + "/single_" + num_cnns + "_units"
     os.makedirs(single_folder)
     name_ind = ""
 
@@ -223,7 +223,7 @@ def cli(**args):
         # Code to test how performance depends of the number of units
     num_classes = len(target_labels) #number of classes
 
-    for num_cnns in range(0,201,5):
+    for num_cnns in range(0,3,1):
         if num_cnns == 0:
             num_cnns = 1    
 
@@ -245,7 +245,7 @@ def cli(**args):
     # testing
     auprc_perf = {}
     num_classes = len(target_labels)
-    for num_cnns in range(0,201,5):
+    for num_cnns in range(0,3,1):
         if num_cnns == 0:
             num_cnns = 1
         
