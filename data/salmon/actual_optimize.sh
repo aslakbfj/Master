@@ -11,10 +11,16 @@
 
 source activate explainn
 
-# num-units as argument!
+# error if no argument is given
+if [ -z "$1" ]
+  then
+    echo "No argument supplied! Either 21_25_10, 21_25_05, 10 or 05"
+    exit 1
+fi
+
 OPTIMIZE_SCRIPT=../../scripts/optimize_units.py
-OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/optimize_units/${SLURM_JOB_ID}"
-H5_FILE="$SCRATCH/AS-TAC/AS-TAC_1000bp.h5"
+OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/optimize_units/${1}_${SLURM_JOB_ID}"
+H5_FILE="$SCRATCH/AS-TAC/AS-TAC_${1}.h5"
 
 ${OPTIMIZE_SCRIPT} ${H5_FILE} ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 --patience 1 \
