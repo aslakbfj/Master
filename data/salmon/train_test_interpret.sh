@@ -15,17 +15,18 @@ source activate explainn
 TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
 OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${SLURM_JOB_ID}"
-INTERPRET_SCRIPT=../../scripts/interpret.py
+
+TRAIN_TSV=./AS-TAC_1000bp_no21_no25.tsv
+TEST_TSV=./AS-TAC_1000bp_21_25.tsv
 
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
 
 ${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 --patience 15 \
 --num-epochs 200 \
---lr 0.001 \
---batch-size 200 \
---num-units ${1} AS-TAC_1000bp_no21_no25.tsv \
-AS-TAC_1000bp_21_25.tsv
+--lr 0.003 \
+--batch-size 100 \
+--num-units ${1} ${TRAIN_TSV} ${TEST_TSV}
 
 echo "training done"
 
@@ -33,14 +34,17 @@ echo "testing..."
 
 # get the best model
 PTH_FILE=$(ls ${OUT_DIR}/*.pth)
+# test the model
 ${TEST_SCRIPT} -o ${OUT_DIR} ${PTH_FILE} \
-${OUT_DIR}/parameters-train.py.json ./AS-TAC_1000bp.validation.tsv
+${OUT_DIR}/parameters-train.py.json ${TEST_TSV}
 
 
 echo "Interpret the model"
+INTERPRET_SCRIPT=../../scripts/interpret.py
+
 ${INTERPRET_SCRIPT} -t -o ${OUT_DIR} --correlation 0.75 --num-well-pred-seqs 1000 \
 ${PTH_FILE} ${OUT_DIR}/parameters-train.py.json \
-./AS-TAC_1000bp.train.tsv
+${TRAIN_TSV}
 
 echo "Cluster the filters (i.e., remove redundancy)"
 PY_SCRIPT=../../scripts/utils/meme2clusters.py
