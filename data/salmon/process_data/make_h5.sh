@@ -4,6 +4,8 @@
 #SBATCH --ntasks=8			                # 1 core (CPU)
 #SBATCH --job-name=process_data             # Name of job
 #SBATCH --mem=80G 			                # Default memory per CPU is 3GB
+#SBATCH --partition=gpu                     # Use GPU partition
+#SBATCH --gres=gpu:1                        # Use one GPU
 #SBATCH --output=./slurm/tsv2h5%j.log       # Stdout and stderr file
 
 
