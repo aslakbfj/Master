@@ -231,7 +231,7 @@ def cli(**args):
         criterion = nn.BCEWithLogitsLoss()
         optimizer = torch.optim.Adam(explainn.parameters(), lr=learning_rate)
         out_dir=out_job + "/" + str(num_cnns)
-        
+        os.makedirs(out_dir)
         model, train_error, test_error = train.train_explainn(dataloaders["train"], dataloaders["valid"], explainn,
                                                     device, criterion, optimizer, num_epochs,
                                                     out_dir,
