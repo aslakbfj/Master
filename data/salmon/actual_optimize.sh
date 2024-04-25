@@ -16,7 +16,7 @@ OPTIMIZE_SCRIPT=../../scripts/optimize_units.py
 OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/optimize_units/${SLURM_JOB_ID}"
 H5_FILE="$SCRATCH/AS-TAC/AS-TAC_1000bp.h5"
 
-${OPTIMIZE_SCRIPT} ${H5_FILE} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
+${OPTIMIZE_SCRIPT} ${H5_FILE} ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 --patience 15 \
 --num-epochs 200 \
 --batch-size 200 \

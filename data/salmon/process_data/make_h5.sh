@@ -11,7 +11,7 @@ source activate explainn
 
 echo "num-units as argument!"
 TSV_SCRIPT=../../../scripts/tsv2h5.py
-OUT_DIR=$SCRATCH/AS-TAC
+OUT_DIR=$SCRATCH/AS-TAC/
 BED_LIST=$SCRATCH/downloads/genomes/salmon/bed_list_test.txt
 TSV_FILE=$SCRATCH/AS-TAC/AS-TAC_1000bp.tsv
 

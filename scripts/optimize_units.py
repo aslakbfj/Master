@@ -38,6 +38,10 @@ CONTEXT_SETTINGS = {
     "h5",
     type=click.Path(exists=True, resolve_path=True),
 )
+@click.argument(
+    "output-dir",
+    type=click.Path(resolve_path=True),
+)
 
 @click.option(
     "-c", "--cpu-threads",
@@ -51,13 +55,13 @@ CONTEXT_SETTINGS = {
     help="Debugging mode.",
     is_flag=True,
 )
-@click.option(
-    "-o", "--output-dir",
-    help="Output directory.",
-    type=click.Path(resolve_path=True),
-    default="./",
-    show_default=True,
-)
+# @click.option(
+#     "-o", "--output-dir",
+#     help="Output directory.",
+#     type=click.Path(resolve_path=True),
+#     default="./",
+#     show_default=True,
+# )
 @click.option(
     "-t", "--time",
     help="Return the program's running execution time in seconds.",
