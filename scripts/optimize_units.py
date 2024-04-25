@@ -204,7 +204,7 @@ def cli(**args):
     criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(explainn.parameters(), lr=learning_rate)
 
-    single_folder = out_job + "/single_" + num_cnns + "_units"
+    single_folder = out_job + "/single_" + str(num_cnns) + "_units"
     os.makedirs(single_folder)
     name_ind = ""
 

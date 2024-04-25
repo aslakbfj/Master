@@ -23,9 +23,9 @@ OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/optimize_units/${1}_${SLURM_JOB_ID}"
 H5_FILE="$SCRATCH/AS-TAC/AS-TAC_${1}.h5"
 
 ${OPTIMIZE_SCRIPT} ${H5_FILE} ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
---patience 1 \
---num-epochs 1 \
+--patience 0 \
+--num-epochs 2 \
 --batch-size 100 \
---num-units 100  \
+--num-units 10  \
 -t \
 --lr 0.003
