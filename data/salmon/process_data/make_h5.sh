@@ -3,7 +3,7 @@
 #SBATCH --nodes=1			                # Use 1 node
 #SBATCH --ntasks=8			                # 1 core (CPU)
 #SBATCH --job-name=process_data             # Name of job
-#SBATCH --mem=60G 			                # Default memory per CPU is 3GB
+#SBATCH --mem=80G 			                # Default memory per CPU is 3GB
 #SBATCH --output=./slurm/tsv2h5%j.log       # Stdout and stderr file
 
 

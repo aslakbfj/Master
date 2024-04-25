@@ -41,7 +41,10 @@ def cli(**args):
     # Remove "AS-TAC-peaks/AtlanticSalmon_ATAC_" and ".mLb.clN_peaks.narrowPeak" from the strings in labels list
     labels = [label.replace("AS-TAC-peaks/AtlanticSalmon_ATAC_", "").replace(".mLb.clN_peaks.narrowPeak", "") for label in labels]
 
-    # make a subset of the data that starts with "21" or "25"
+
+
+    ########## make a subset of the data that starts with "21" or "25" ###############
+
     df_21_25 = df[df[0].str.startswith('21') | df[0].str.startswith('25')]
     # make a subset of the rest of the data
     df_excluded_21_25 = df[~(df[0].str.startswith('21') | df[0].str.startswith('25'))]
@@ -54,13 +57,78 @@ def cli(**args):
         df_excluded_21_25 = df_excluded_21_25.drop(0, axis=1)
     
 
-    ########### MAKE A 10 % SPLIT WITH 21 25 SEPARATED ###########
+    ###################################################################
+    ########## MAKE A 5 % SPLIT WITHOUT SEPARATING 21/25    ###########
+    ##########                                              ###########
+    ###################################################################
+
+
+    # remove chrom ranges if there are 65 columns
+    if df.shape[1] == 65:
+        df = df.drop(0, axis=1)
+    
+    # separate sequences and binary features
+    seqs = df.iloc[:, 0]
+    features = df.iloc[:, 1:]
+
+    #remove df to save memory
+    del df
+
+    # one hot encode sequences
+    seqs = np.array([dna_one_hot(str(seq)) for seq in seqs])
+
+    # split data into train, test, valid
+    train_seq_05, valid_seq_05, train_feat_05, valid_feat_05 = train_test_split(seqs, features, test_size=0.05, random_state=42)
+    train_seq_05, test_seq_05, train_feat_05, test_feat_05 = train_test_split(train_seq, train_feat, test_size=0.052, random_state=42)
+
+    # create .h5 file
+    with h5py.File(args['output'] + "AS-TAC_05.h5", 'w') as hf:
+        hf.create_dataset('train_in', data=train_seq_05)
+        hf.create_dataset('valid_in', data=valid_seq_05)
+        hf.create_dataset('test_in', data=test_seq_05)
+        hf.create_dataset('train_out', data=train_feat_05)
+        hf.create_dataset('valid_out', data=valid_feat_05)
+        hf.create_dataset('test_out', data=test_feat_05)
+        hf.create_dataset('target_labels', data=labels)
+
+    # Remove train_05, valid_05, test_05 to save memory
+    del train_seq_05, valid_seq_05, test_seq_05, train_feat_05, valid_feat_05, test_feat_05
+
+
+    ###################################################################
+    ########## MAKE A 10 % SPLIT WITHOUT SEPARATING 21/25   ###########
+    ##########                                              ###########
+    ###################################################################
+
+    # split data into train_10, test_10, valid_10 with a 10 % split
+    train_seq_10, valid_seq_10, train_feat_10, valid_feat_10 = train_test_split(seqs, features, test_size=0.1, random_state=42)
+    train_seq_10, test_seq_10, train_feat_10, test_feat_10 = train_test_split(train_seq, train_feat, test_size=0.1, random_state=42)
+
+    # create .h5 file
+    with h5py.File(args['output'] + "AS-TAC_10.h5", 'w') as hf:
+        hf.create_dataset('train_in', data=train_seq_10)
+        hf.create_dataset('valid_in', data=valid_seq_10)
+        hf.create_dataset('test_in', data=test_seq_10)
+        hf.create_dataset('train_out', data=train_feat_10)
+        hf.create_dataset('valid_out', data=valid_feat_10)
+        hf.create_dataset('test_out', data=test_feat_10)
+        hf.create_dataset('target_labels', data=labels)
+
+
+    # Remove train_10, valid_10, test_10 to save memory
+    del train_seq_10, valid_seq_10, test_seq_10, train_feat_10, valid_feat_10, test_feat_10
+
+
+    ###################################################################
+    ##########  MAKE A 10 % SPLIT WITH 21 25 SEPARATED       ###########
+    ##########                                              ###########
+    ###################################################################
 
     # Make a new df_21_25_10 from where you add a random 5 % of the rows of df_excluded_21_25 to df_21_25, and remove those rows from df_excluded_21_25 to a new df with _10. use pd.concat
     sample = df_excluded_21_25.sample(frac=0.05)
     df_21_25_10 = pd.concat([df_21_25, sample])
     df_excluded_21_25_10 = df_excluded_21_25.drop(sample.index)
-
+    del sample
     # separate sequences and binary features
     seqs_21_25_10 = df_21_25_10.iloc[:, 0]
     features_21_25_10 = df_21_25_10.iloc[:, 1:]
@@ -84,6 +152,10 @@ def cli(**args):
         hf.create_dataset('valid_out', data=valid_feat_21_25_10)
         hf.create_dataset('test_out', data=test_feat_21_25_10)
         hf.create_dataset('target_labels', data=labels)
+
+
+    # Remove train_21_25_10, valid_21_25_10, test_21_25_10 to save memory
+    del train_seq_21_25_10, valid_seq_21_25_10, test_seq_21_25_10, train_feat_21_25_10, valid_feat_21_25_10, test_feat_21_25_10
 
     ########### MAKE A 5 % SPLIT WITH 21 25 SEPARATED ###########
 
@@ -111,44 +183,9 @@ def cli(**args):
         hf.create_dataset('test_out', data=test_feat_21)
         hf.create_dataset('target_labels', data=labels)
 
-    # remove chrom ranges if there are 65 columns
-    if df.shape[1] == 65:
-        df = df.drop(0, axis=1)
+    # Remove train_21, valid_21, test_21 to save memory which is quite unnecessary as we are done (Y)
+    del train_seq_21, valid_seq_21, test_seq_21, train_feat_21, valid_feat_21, test_feat_21
     
-    # separate sequences and binary features
-    seqs = df.iloc[:, 0]
-    features = df.iloc[:, 1:]
-
-    # one hot encode sequences
-    seqs = np.array([dna_one_hot(str(seq)) for seq in seqs])
-
-    # split data into train, test, valid
-    train_seq_05, valid_seq_05, train_feat_05, valid_feat_05 = train_test_split(seqs, features, test_size=0.05, random_state=42)
-    train_seq_05, test_seq_05, train_feat_05, test_feat_05 = train_test_split(train_seq, train_feat, test_size=0.052, random_state=42)
-
-    # create .h5 file
-    with h5py.File(args['output'] + "AS-TAC_05.h5", 'w') as hf:
-        hf.create_dataset('train_in', data=train_seq_05)
-        hf.create_dataset('valid_in', data=valid_seq_05)
-        hf.create_dataset('test_in', data=test_seq_05)
-        hf.create_dataset('train_out', data=train_feat_05)
-        hf.create_dataset('valid_out', data=valid_feat_05)
-        hf.create_dataset('test_out', data=test_feat_05)
-        hf.create_dataset('target_labels', data=labels)
-
-    # split data into train_10, test_10, valid_10 with a 10 % split
-    train_seq_10, valid_seq_10, train_feat_10, valid_feat_10 = train_test_split(seqs, features, test_size=0.1, random_state=42)
-    train_seq_10, test_seq_10, train_feat_10, test_feat_10 = train_test_split(train_seq, train_feat, test_size=0.1, random_state=42)
-
-    # create .h5 file
-    with h5py.File(args['output'] + "AS-TAC_10.h5", 'w') as hf:
-        hf.create_dataset('train_in', data=train_seq_10)
-        hf.create_dataset('valid_in', data=valid_seq_10)
-        hf.create_dataset('test_in', data=test_seq_10)
-        hf.create_dataset('train_out', data=train_feat_10)
-        hf.create_dataset('valid_out', data=valid_feat_10)
-        hf.create_dataset('test_out', data=test_feat_10)
-        hf.create_dataset('target_labels', data=labels)
 
 if __name__ == "__main__":
     cli()
