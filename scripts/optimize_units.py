@@ -248,7 +248,8 @@ def cli(**args):
     for num_cnns in range(0,4,2):
         if num_cnns == 0:
             num_cnns = 1
-        
+
+        out_dir=out_job + "/" + str(num_cnns)
         model = networks.ExplaiNN(num_cnns, input_length, num_classes, filter_size).to(device)
         
         #load the best model
@@ -312,7 +313,7 @@ def cli(**args):
     AUPRC = raw_prcs_explainn.values[:63]
     ax.bar(targets,AUPRC)
     plt.savefig(single_folder + "/AUPRC_targets.png")
-
+    print(targets)
 
 if __name__ == "__main__":
     cli()
