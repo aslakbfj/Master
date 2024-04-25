@@ -181,20 +181,20 @@ def cli(**args):
 
     
     # Parameters
-    num_epochs = args['num-epochs']
-    batch_size = args['batch-size']
-    learning_rate = args['lr']
+    num_epochs = args["num-epochs"]
+    batch_size = args["batch-size"]
+    learning_rate = args["lr"]
 
 
-    dataloaders, target_labels, train_out = tools.load_datas(args['h5'], batch_size,
+    dataloaders, target_labels, train_out = tools.load_datas(args["h5"], batch_size,
                                                             0, True)
 
     target_labels = [i.decode("utf-8") for i in target_labels]
 
-    num_cnns = args['num-units']
-    input_length = args['input-length']
+    num_cnns = args["num-units"]
+    input_length = args["input-length"]
     num_classes = len(target_labels)
-    filter_size = args['filter-size']
+    filter_size = args["filter-size"]
 
     # cnn_deep = networks.ConvNetDeep(num_classes)
     # cnn_shallow = networks.ConvNetShallow(num_classes)
@@ -210,10 +210,10 @@ def cli(**args):
 
 
     # training an individual model with 100 units
-    explainn_100, train_error, test_error = train.train_explainn(dataloaders['train'], dataloaders['valid'], explainn,
+    explainn_100, train_error, test_error = train.train_explainn(dataloaders["train"], dataloaders["valid"], explainn,
                                                     device, criterion, optimizer, num_epochs,
                                                     single_folder, name_ind, verbose=True, trim_weights=False,
-                                                    patience=args['patience'], checkpoint=args['checkpoint'])
+                                                    patience=args["patience"], checkpoint=args["checkpoint"])
     
     tools.showPlot(train_error, test_error, "Loss trend", "Loss", save=single_folder + "/loss_trend.png")
 
@@ -232,11 +232,11 @@ def cli(**args):
         optimizer = torch.optim.Adam(explainn.parameters(), lr=learning_rate)
         out_dir=out_job + "/" + str(num_cnns)
         
-        model, train_error, test_error = train.train_explainn(dataloaders['train'], dataloaders['valid'], explainn,
+        model, train_error, test_error = train.train_explainn(dataloaders["train"], dataloaders["valid"], explainn,
                                                     device, criterion, optimizer, num_epochs,
                                                     out_dir,
                                                     name_ind, verbose=True, trim_weights=False,
-                                                    patience=args['patience'], checkpoint=args['checkpoint'])
+                                                    patience=args["patience"], checkpoint=args["checkpoint"])
         
     #old dir: ExplaiNN_filters_TF_binding/ExplaiNN_TF_num_cnns_
         print("Numm_cnns: " + str(num_cnns))
@@ -260,7 +260,7 @@ def cli(**args):
         model.load_state_dict(torch.load(out_dir + "/" + weight_file))
         model.eval()
 
-        labels_E, outputs_E = test.run_test(model, dataloaders['test'], device)
+        labels_E, outputs_E = test.run_test(model, dataloaders["test"], device)
         
         auprc_perf[num_cnns] = average_precision_score(labels_E, outputs_E)
         
@@ -280,7 +280,7 @@ def cli(**args):
 
         # performances for individual TFs (classes)
     explainn_100.eval()
-    labels_E, outputs_E = test.run_test(explainn_100, dataloaders['test'], device)
+    labels_E, outputs_E = test.run_test(explainn_100, dataloaders["test"], device)
 
     no_skill_probs = [0 for _ in range(len(labels_E[:,0]))]
     ns_fpr, ns_tpr, _ = metrics.roc_curve(labels_E[:,0], no_skill_probs)
