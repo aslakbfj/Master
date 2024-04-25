@@ -16,12 +16,13 @@ OPTIMIZE_SCRIPT=../../scripts/optimize_units.py
 OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/optimize_units/${SLURM_JOB_ID}"
 H5_FILE="$SCRATCH/AS-TAC/AS-TAC_1000bp.h5"
 
-echo "Train (same parameters as in the preprint; it can take a few hours) and test"
-
-${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
---patience 10 \
---num-epochs 50 \
+${OPTIMIZE_SCRIPT} ${H5_FILE} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
+--patience 15 \
+--num-epochs 200 \
 --batch-size 200 \
---num-units ${1} AS-TAC_1000bp.train.tsv \
-AS-TAC_1000bp.validation.tsv
+--num-units 100  \
+-t \
+--lr 0.0001
+
+
 

@@ -208,7 +208,8 @@ def cli(**args):
     # training an individual model with 100 units
     explainn_100, train_error, test_error = train.train_explainn(dataloaders['train'], dataloaders['valid'], explainn,
                                                     device, criterion, optimizer, num_epochs,
-                                                    single_folder, name_ind, verbose=True, trim_weights=False)
+                                                    single_folder, name_ind, verbose=True, trim_weights=False,
+                                                    patience=args['patience'], checkpoint=args['checkpoint'])
     
     tools.showPlot(train_error, test_error, "Loss trend", "Loss", save=single_folder + "/loss_trend.png")
 
@@ -230,7 +231,8 @@ def cli(**args):
         model, train_error, test_error = train.train_explainn(dataloaders['train'], dataloaders['valid'], explainn,
                                                     device, criterion, optimizer, num_epochs,
                                                     out_dir,
-                                                    name_ind, verbose=True, trim_weights=False, checkpoint=False)
+                                                    name_ind, verbose=True, trim_weights=False,
+                                                    patience=args['patience'], checkpoint=args['checkpoint'])
         
     #old dir: ExplaiNN_filters_TF_binding/ExplaiNN_TF_num_cnns_
         print("Numm_cnns: " + str(num_cnns))
