@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 import torch
 from tqdm import tqdm
 import torch.nn as nn
-
+import os
 import sys
 sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])),
                                 os.pardir))
