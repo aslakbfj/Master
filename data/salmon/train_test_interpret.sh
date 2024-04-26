@@ -12,19 +12,20 @@
 source activate explainn
 
 # num-units as argument!
+DATA_DIR=$SCRATCH/AS-TAC
 TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
-OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${SLURM_JOB_ID}"
+OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${SLURM_JOB_ID}"
 
-TRAIN_TSV=./AS-TAC_1000bp_no21_no25.tsv
-TEST_TSV=./AS-TAC_1000bp_21_25.tsv
+TRAIN_TSV=${DATA_DIR}/AS-TAC_21_25_train.tsv
+TEST_TSV=${DATA_DIR}/AS-TAC_21_25_test.tsv
 
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
 
 ${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
---patience 15 \
+--patience 10 \
 --num-epochs 200 \
---lr 0.003 \
+--lr 0.005 \
 --batch-size 100 \
 --num-units ${1} ${TRAIN_TSV} ${TEST_TSV}
 
@@ -56,9 +57,11 @@ ${PY_SCRIPT} -c 8 -f png -o ${OUT_DIR}/logos ${OUT_DIR}/clusters/clusters.meme
 
 
 echo "Visualize the logos of CEBP and PAX clusters (i.e., highlighted in the preprint)"
+
 PY_SCRIPT=../../scripts/utils/tomtom.py
+#wget https://jaspar.elixir.no/download/data/2024/CORE/JASPAR2024_CORE_vertebrates_non-redundant_pfms_meme.txt -P ../JASPAR/
 ${PY_SCRIPT} -c 8 -o ${OUT_DIR}/tomtom ${OUT_DIR}/clusters/clusters.meme \
-../JASPAR/JASPAR2022_CORE_vertebrates_non-redundant_pfms_meme.txt
+../JASPAR/JASPAR2024_CORE_vertebrates_non-redundant_pfms_meme.txt
 
 #z grep -e MA0069.1 -e MA0102.4 ${OUT_DIR}/tomtom/tomtom.tsv.gz
 
