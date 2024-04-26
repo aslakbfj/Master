@@ -223,7 +223,7 @@ def cli(**args):
         # Code to test how performance depends of the number of units
     num_classes = len(target_labels) #number of classes
 
-    for num_cnns in range(0,4,2):
+    for num_cnns in range(0,201,5):
         if num_cnns == 0:
             num_cnns = 1    
 
@@ -245,7 +245,7 @@ def cli(**args):
     # testing
     auprc_perf = {}
     num_classes = len(target_labels)
-    for num_cnns in range(0,4,2):
+    for num_cnns in range(0,201,5):
         if num_cnns == 0:
             num_cnns = 1
 
@@ -314,7 +314,7 @@ def cli(**args):
     ax.bar(targets,AUPRC)
     plt.savefig(single_folder + "/AUPRC_targets.png")
     print(targets)
-    
+
 
 if __name__ == "__main__":
     cli()
