@@ -314,6 +314,7 @@ def cli(**args):
     ax.bar(targets,AUPRC)
     plt.savefig(single_folder + "/AUPRC_targets.png")
     print(targets)
+    
 
 if __name__ == "__main__":
     cli()
