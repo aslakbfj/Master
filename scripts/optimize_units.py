@@ -238,7 +238,7 @@ def cli(**args):
                                                     name_ind, verbose=True, trim_weights=False,
                                                     patience=args["patience"], checkpoint=args["checkpoint"])
         
-    #old dir: ExplaiNN_filters_TF_binding/ExplaiNN_TF_num_cnns_
+        
         print("Numm_cnns: " + str(num_cnns))
         print("Min test error: " + str(np.min(test_error)))
 
