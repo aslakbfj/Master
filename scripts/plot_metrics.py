@@ -41,10 +41,6 @@ from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
     "-o", "--output",
     help="output model name.")
 
-def load_multiple_json_objects(handle):
-    return [json.loads(line) for line in handle]
-
-
 def cli(**args):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -150,6 +146,10 @@ def cli(**args):
     plt.xlabel("Unit")
     plt.title("Weights of the filters")
     plt.savefig(model_dir + "/weights.png")
+
+
+def load_multiple_json_objects(handle):
+    return [json.loads(line) for line in handle]
 
 if __name__ == "__main__":
     cli()
