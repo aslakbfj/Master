@@ -11,7 +11,9 @@
 
 source activate explainn
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+PLOT_SCRIPT=../../scripts/heatmap.py
+OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}"
+
 
 
  weight_file = os.listdir("CAM_filters_TF_binding/CAM_TF_num_cnns_"+str(num_cnns)+"/")[0]

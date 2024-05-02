@@ -10,15 +10,25 @@
 
 
 source activate explainn
-
 # num-units as argument!
 DATA_DIR=$SCRATCH/AS-TAC
 TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
-OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${SLURM_JOB_ID}"
 
+/mnt/SCRATCH/asfj/AS-TAC/AS-TAC_21_25_train.tsv
 TRAIN_TSV=${DATA_DIR}/AS-TAC_21_25_train.tsv
 TEST_TSV=${DATA_DIR}/AS-TAC_21_25_test.tsv
+
+# Retrieve which tsv the model was trained on
+file_name=$(basename "$TRAIN_TSV")  # Get the file name from the path
+prefix_removed=${file_name#*_}  # Remove the prefix before the first underscore
+TSV_VARIANT=${prefix_removed%_*}  # Remove the suffix after the last underscore
+
+
+OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${TSV_VARIANT}"
+
+
+# withdraw 21_25 from TRAIN_TSV
 
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
 
