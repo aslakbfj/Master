@@ -133,5 +133,16 @@ def cli(**args):
     sns.barplot(x=classes, y=AUPRC, hue=df['tissue'], palette="tab10", title="AUPRC using "+ output)
     plt.savefig(output +'.png')
 
+
+    # Plot heatmap of filters
+    # make a heatmap of weights, y axis is the filter number, x axis is the position in the filter
+    weights = explainn.final.weight.detach().cpu().numpy()
+    plt.figure(figsize=(20,10))
+    sns.heatmap(weights, cmap="viridis")
+    plt.ylabel("Target label")
+    plt.xlabel("Unit")
+    plt.title("Weights of the filters")
+    plt.savefig(model_dir + "/weights.png")
+
 if __name__ == "__main__":
     cli()
