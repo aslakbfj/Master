@@ -41,9 +41,6 @@ from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
     "-o", "--output",
     help="output model name.")
 
-def load_multiple_json_objects(handle):
-    return [json.loads(line) for line in handle]
-
 
 def cli(**args):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
