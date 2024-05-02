@@ -53,13 +53,13 @@ def cli(**args):
     handle = get_file_handle(model_dir + "/parameters-train.py.json", "rt")
     train_args = json.load(handle)
     handle.close()
-    if "training_parameters_file" in train_args: # i.e. for fine-tuned models
-        handle = get_file_handle(train_args["training_parameters_file"], "rt")
+    if "training_file" in train_args: # i.e. for fine-tuned models
+        handle = get_file_handle(train_args["training_file"], "rt")
         train_args = json.load(handle)
         handle.close()
         # Else, show an error message
     else:
-        print("No training_parameters_file key in the model directory.")
+        print("No training_file key in the model directory.")
         sys.exit(1)
 
     # find the .pth file in weight_file list
