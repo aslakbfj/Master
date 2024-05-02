@@ -13,4 +13,4 @@ source activate explainn
 
 OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}"
 PY_SCRIPT=../../scripts/plot_metrics.py
-${PY_SCRIPT} -d $OUT_DIR -o ""
+${PY_SCRIPT} -i $ {OUT_DIR} -o ${1}
