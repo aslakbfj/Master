@@ -37,9 +37,7 @@ from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
 
 @click.option(
     "-o", "--output",
-    help="output model name.", required=True
-    is_flag=True,
-)
+    help="output model name.")
 
 def cli(**args):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
