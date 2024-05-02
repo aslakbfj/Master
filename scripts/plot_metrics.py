@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 
 import sys
+import os
+import json
+import numpy as np
+import os
+import pandas as pd
+import shutil
 sys.path.insert(0, os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])),
                                 os.pardir))
 from explainn import tools
@@ -11,14 +17,10 @@ from explainn import interpretation
 import click
 from click_option_group import optgroup
 import torch
-import os
-import json
 from torch import nn
 from sklearn.metrics import average_precision_score
 from sklearn import metrics
 from matplotlib import pyplot as plt
-import pandas as pd
-import numpy as np
 import seaborn as sns
 from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
                    get_device)
