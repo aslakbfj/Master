@@ -41,6 +41,10 @@ from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
     "-o", "--output",
     help="output model name.")
 
+def load_multiple_json_objects(handle):
+    return [json.loads(line) for line in handle]
+
+
 def cli(**args):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -51,16 +55,16 @@ def cli(**args):
 
     # Load training parameters
     handle = get_file_handle(model_dir + "/parameters-train.py.json", "rt")
-    train_args = load_multiple_json_objects(handle)
+    train_args = json.load(handle)
     handle.close()
-    if "training_file" in train_args: # i.e. for fine-tuned models
-        handle = get_file_handle(train_args["training_file"], "rt")
-        train_args = json.load(handle)
-        handle.close()
-        # Else, show an error message
-    else:
-        print("No training_file key in the model directory.")
-        sys.exit(1)
+    # if "training_file" in train_args: # i.e. for fine-tuned models
+    #     handle = get_file_handle(train_args["training_file"], "rt")
+    #     train_args = json.load(handle)
+    #     handle.close()
+    #     # Else, show an error message
+    # else:
+    #     print("No training_file key in the model directory.")
+    #     sys.exit(1)
 
     # find the .pth file in weight_file list
     for file in model_dir_list:
@@ -146,10 +150,6 @@ def cli(**args):
     plt.xlabel("Unit")
     plt.title("Weights of the filters")
     plt.savefig(model_dir + "/weights.png")
-
-
-def load_multiple_json_objects(handle):
-    return [json.loads(line) for line in handle]
 
 if __name__ == "__main__":
     cli()
