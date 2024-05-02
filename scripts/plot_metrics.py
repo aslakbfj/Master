@@ -45,6 +45,7 @@ def cli(**args):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     # List all the files in the model directory
+    model_dir=args["model_dir"]
     model_dir_list = os.listdir(model_dir)
     output = args["output"]
 
