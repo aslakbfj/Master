@@ -139,9 +139,9 @@ def cli(**args):
     classes = raw_prcs_explainn.index
     AUPRC = raw_prcs_explainn.values
     #make the sns.barplot bigger
-
-    sns.barplot(x=classes, y=AUPRC, hue=df['tissue'], palette="tab10", title="AUPRC using "+ output)
-    plt.savefig(output +'_AUCPRC.png')
+    title_plot = "AUPRC using "+ output
+    sns.barplot(x=classes, y=AUPRC, hue=df['tissue'], palette="tab10", title=title_plot)
+    plt.savefig(output + ".png")
 
 
     # Plot heatmap of filters
