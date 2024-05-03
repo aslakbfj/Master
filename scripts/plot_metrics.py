@@ -139,8 +139,10 @@ def cli(**args):
     classes = raw_prcs_explainn.index
     AUPRC = raw_prcs_explainn.values
     #make the sns.barplot bigger
-    sns.barplot(x=classes, y=AUPRC, hue=df['tissue'], palette="tab10")
-    plt.savefig(output + ".png")
+    sns.barplot(x=classes, y=AUPRC, hue=df['tissue'], palette="tab10", width = 0.9)
+    plt.savefig(model_dir+  "/" + output + ".png")
+    print(classes)
+    print(AUPRC)
 
 
     # Plot heatmap of filters
@@ -155,7 +157,7 @@ def cli(**args):
     plt.ylabel("Target label")
     plt.xlabel("Unit")
     plt.title("Weights of the filters")
-    plt.savefig(model_dir + "/weights.png")
+    plt.savefig(model_dir + "/final_layer_heatmap.png")
 
 if __name__ == "__main__":
     cli()
