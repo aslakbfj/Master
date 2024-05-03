@@ -97,7 +97,7 @@ def cli(**args):
         target_labels = f.read().splitlines()
 
     # Remove "AS-TAC-peaks/AtlanticSalmon_ATAC_" and ".mLb.clN_peaks.narrowPeak" from the strings in labels list
-    target_labels = [target_labels.replace("AS-TAC-peaks/AtlanticSalmon_ATAC_", "").replace(".mLb.clN_peaks.narrowPeak", "") for label in target_labels]
+    target_labels = [label.replace("AS-TAC-peaks/AtlanticSalmon_ATAC_", "").replace(".mLb.clN_peaks.narrowPeak", "") for label in target_labels]
 
 
     labels_E, outputs_E = test.run_test(explainn, data_loader, device)
@@ -141,12 +141,16 @@ def cli(**args):
     #make the sns.barplot bigger
 
     sns.barplot(x=classes, y=AUPRC, hue=df['tissue'], palette="tab10", title="AUPRC using "+ output)
-    plt.savefig(output +'.png')
+    plt.savefig(output +'_AUCPRC.png')
 
 
     # Plot heatmap of filters
     # make a heatmap of weights, y axis is the filter number, x axis is the position in the filter
     weights = explainn.final.weight.detach().cpu().numpy()
+    # give weigts row names from target_labels
+    weights = pd.DataFrame(weights, index=target_labels)
+    #sort weights by alphabet on row names
+    weights = weights.sort_index()
     plt.figure(figsize=(20,10))
     sns.heatmap(weights, cmap="viridis")
     plt.ylabel("Target label")
