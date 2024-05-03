@@ -83,14 +83,14 @@ def cli(**args):
 
 
     # Get test sequences and labels
-    seqs, labels, _ = get_seqs_labels_ids(train_args["validation_file"],
+    seqs, target_labels, _ = get_seqs_labels_ids(train_args["validation_file"],
                                           args["debugging"],
                                           False,
                                           train_args["input_length"])
     
 
     # Get training DataLoader
-    data_loader = get_data_loader(seqs, labels, train_args["batch_size"])
+    data_loader = get_data_loader(seqs, target_labels, train_args["batch_size"])
 
     
 
