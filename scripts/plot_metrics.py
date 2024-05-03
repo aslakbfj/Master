@@ -83,22 +83,28 @@ def cli(**args):
 
 
     # Get test sequences and labels
-    seqs, target_labels, _ = get_seqs_labels_ids(train_args["validation_file"],
+    seqs, labels, _ = get_seqs_labels_ids(train_args["validation_file"],
                                           args["debugging"],
                                           False,
                                           train_args["input_length"])
     
 
     # Get training DataLoader
-    data_loader = get_data_loader(seqs, target_labels, train_args["batch_size"])
+    data_loader = get_data_loader(seqs, labels, train_args["batch_size"])
 
-    
+        # load target_labels
+    with open("/mnt/SCRATCH/asfj/downloads/genomes/salmon/bed_list_full.txt", 'r') as f:
+        target_labels = f.read().splitlines()
+
+    # Remove "AS-TAC-peaks/AtlanticSalmon_ATAC_" and ".mLb.clN_peaks.narrowPeak" from the strings in labels list
+    target_labels = [target_labels.replace("AS-TAC-peaks/AtlanticSalmon_ATAC_", "").replace(".mLb.clN_peaks.narrowPeak", "") for label in target_labels]
+
 
     labels_E, outputs_E = test.run_test(explainn, data_loader, device)
 
     no_skill_probs = [0 for _ in range(len(labels_E[:,0]))]
     ns_fpr, ns_tpr, _ = metrics.roc_curve(labels_E[:,0], no_skill_probs)
-
+    
     roc_aucs = {}
     raw_aucs = {}
     roc_prcs = {}
