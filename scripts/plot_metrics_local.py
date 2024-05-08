@@ -34,5 +34,10 @@ def plot_metrics(metrics_csv, output):
     plt.tight_layout()
     plt.savefig(output)
 
+
+with open("../SCRATCH/AS-TAC/bed_list_test.txt", 'r') as f:
+target_labels = f.read().splitlines()
+# get the number of classes from target_labels
+num_classes = len(target_labels)
 if __name__ == "__main__":
     plot_metrics()

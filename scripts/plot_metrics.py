@@ -40,6 +40,9 @@ from utils import (get_file_handle, get_seqs_labels_ids, get_data_loader,
 @click.option(
     "-o", "--output",
     help="output model name.")
+@click.option(
+    "-bed", "--bed-file",
+    help="bed file with target label names.")
 
 
 def cli(**args):
@@ -72,14 +75,17 @@ def cli(**args):
     # Get model parameters
     num_cnns = train_args['num_units']
     input_length = train_args['input_length']
-    num_classes = 63
     filter_size = train_args['filter_size']
+
+    # load target_labels
+    with open("/mnt/SCRATCH/asfj/downloads/genomes/salmon/" + args['bed_file'], 'r') as f:
+        target_labels = f.read().splitlines()
+        num_classes = len(target_labels)
 
     # Define model
     explainn = networks.ExplaiNN(num_cnns, input_length, num_classes, filter_size).to(device)
     explainn.load_state_dict(torch.load(model_dir + "/" + weight_file))
     explainn.eval()
-
 
 
     # Get test sequences and labels
@@ -91,11 +97,6 @@ def cli(**args):
 
     # Get training DataLoader
     data_loader = get_data_loader(seqs, labels, train_args["batch_size"])
-
-        # load target_labels
-    with open("/mnt/SCRATCH/asfj/downloads/genomes/salmon/bed_list_full.txt", 'r') as f:
-        target_labels = f.read().splitlines()
-
     # Remove "AS-TAC-peaks/AtlanticSalmon_ATAC_" and ".mLb.clN_peaks.narrowPeak" from the strings in labels list
     target_labels = [label.replace("AS-TAC-peaks/AtlanticSalmon_ATAC_", "").replace(".mLb.clN_peaks.narrowPeak", "") for label in target_labels]
 
@@ -125,9 +126,6 @@ def cli(**args):
     raw_prcs_explainn = pd.Series(raw_prcs)
     raw_aucs_explainn = pd.Series(raw_aucs)
     # AUPRC
-    # The TFs index object has the target labels. And within the 63 labes, I want to color by labels containing the words "Brain", "Liver", "Gonad", "Muscle", "MidSomitogenesis", "LateSomitogenesis", "Lateblastulation", "EarlySomitogenesis_R2"
-    # I will use the seaborn library to color the bars
-
     # make a new column that is the first word before "_" in the rownames of the Series object turned into a df
     df = raw_prcs_explainn.reset_index()
     df['tissue'] = df['index'].str.split('_').str[0]
@@ -139,11 +137,21 @@ def cli(**args):
     classes = raw_prcs_explainn.index
     AUPRC = raw_prcs_explainn.values
     #make the sns.barplot bigger
+    plt.figure(figsize=(20,10))
     sns.barplot(x=classes, y=AUPRC, hue=df['tissue'], palette="tab10", width = 0.9)
     plt.savefig(model_dir+  "/" + output + ".png")
     print(classes)
     print(AUPRC)
 
+    # print classes that has a AUPRC > 0.2, printing the names and values together
+    for i in range(len(classes)):
+        if AUPRC[i] > 0.2:
+            print(classes[i], AUPRC[i])
+
+    # Plot a boxplot of the variances within tissues of the classes
+    plt.figure(figsize=(20,10))
+    sns.boxplot(x=df['tissue'], y=AUPRC)
+    plt.savefig(model_dir + "/boxplot_tissue_variances.png")
 
     # Plot heatmap of filters
     # make a heatmap of weights, y axis is the filter number, x axis is the position in the filter

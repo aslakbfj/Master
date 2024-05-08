@@ -15,11 +15,12 @@ DATA_DIR=$SCRATCH/AS-TAC
 TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
 
-/mnt/SCRATCH/asfj/AS-TAC/AS-TAC_21_25_train.tsv
+#/mnt/SCRATCH/asfj/AS-TAC/AS-TAC_21_25_train.tsv
 TRAIN_TSV=${DATA_DIR}/AS-TAC_21_25_train.tsv
 TEST_TSV=${DATA_DIR}/AS-TAC_21_25_test.tsv
 
 # Retrieve which tsv the model was trained on
+# i.e. 21_25 and so on, where chrom 21 and 25 are test set
 file_name=$(basename "$TRAIN_TSV")  # Get the file name from the path
 prefix_removed=${file_name#*_}  # Remove the prefix before the first underscore
 TSV_VARIANT=${prefix_removed%_*}  # Remove the suffix after the last underscore
