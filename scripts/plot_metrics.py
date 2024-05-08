@@ -143,9 +143,9 @@ def cli(**args):
     print(classes)
     print(AUPRC)
 
-    # print classes that has a AUPRC > 0.2, printing the names and values together
+    # print classes that has a AUPRC < 0.2, printing the names and values together
     for i in range(len(classes)):
-        if AUPRC[i] > 0.2:
+        if AUPRC[i] < 0.2:
             print(classes[i], AUPRC[i])
 
     # Plot a boxplot of the variances within tissues of the classes
