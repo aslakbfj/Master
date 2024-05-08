@@ -16,7 +16,7 @@ TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
 
 #/mnt/SCRATCH/asfj/AS-TAC/AS-TAC_21_25_train.tsv
-TRAIN_TSV=${DATA_DIR}/AS-TAC_noMuscle_21_25_train.tsv.tsv
+TRAIN_TSV=${DATA_DIR}/AS-TAC_noMuscle_21_25_train.tsv
 TEST_TSV=${DATA_DIR}/AS-TAC_noMuscle_21_25_test.tsv
 
 # Retrieve which tsv the model was trained on
