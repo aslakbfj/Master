@@ -80,7 +80,7 @@ def cli(**args):
     # load target_labels
     with open("/mnt/SCRATCH/asfj/downloads/genomes/salmon/" + args['bed_file'], 'r') as f:
         target_labels = f.read().splitlines()
-        num_classes = len(target_labels)
+        num_classes = len(target_labels) 
 
     # Define model
     explainn = networks.ExplaiNN(num_cnns, input_length, num_classes, filter_size).to(device)
