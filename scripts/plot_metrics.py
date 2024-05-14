@@ -167,5 +167,8 @@ def cli(**args):
     plt.title("Weights of the filters")
     plt.savefig(model_dir + "/final_layer_heatmap.png")
 
+
+
+
 if __name__ == "__main__":
     cli()

@@ -58,22 +58,24 @@ ${INTERPRET_SCRIPT} -t -o ${OUT_DIR} --correlation 0.75 --num-well-pred-seqs 100
 ${PTH_FILE} ${OUT_DIR}/parameters-train.py.json \
 ${TRAIN_TSV}
 
-echo "Cluster the filters (i.e., remove redundancy)"
-PY_SCRIPT=../../scripts/utils/meme2clusters.py
-$PY_SCRIPT -c 8 -o ${OUT_DIR}/clusters ${OUT_DIR}/filters.meme
 
-echo "Obtain a logo for each cluster in PNG format (option -f)"
-PY_SCRIPT=../../scripts/utils/meme2logo.py
-${PY_SCRIPT} -c 8 -f png -o ${OUT_DIR}/logos ${OUT_DIR}/clusters/clusters.meme
+# Uncomment for clustering
+# echo "Cluster the filters (i.e., remove redundancy)"
+# PY_SCRIPT=../../scripts/utils/meme2clusters.py
+# $PY_SCRIPT -c 8 -o ${OUT_DIR}/clusters ${OUT_DIR}/filters.meme
+
+# echo "Obtain a logo for each cluster in PNG format (option -f)"
+# PY_SCRIPT=../../scripts/utils/meme2logo.py
+# ${PY_SCRIPT} -c 8 -f png -o ${OUT_DIR}/logos ${OUT_DIR}/clusters/clusters.meme
 
 
 echo "Visualize the logos of CEBP and PAX clusters (i.e., highlighted in the preprint)"
 
 PY_SCRIPT=../../scripts/utils/tomtom.py
 #wget https://jaspar.elixir.no/download/data/2024/CORE/JASPAR2024_CORE_vertebrates_non-redundant_pfms_meme.txt -P ../JASPAR/
-${PY_SCRIPT} -c 8 -o ${OUT_DIR}/tomtom ${OUT_DIR}/clusters/clusters.meme \
+${PY_SCRIPT} -c 8 -o ${OUT_DIR}/tomtom ${OUT_DIR}/filters.meme \
 ../JASPAR/JASPAR2024_CORE_vertebrates_non-redundant_pfms_meme.txt
-
+#${OUT_DIR}/clusters/clusters.meme \ #
 
 sbatch plot_metrics.sh ${1}_units_${TSV_VARIANT} bed_list_noMuscle.txt
 #z grep -e MA0069.1 -e MA0102.4 ${OUT_DIR}/tomtom/tomtom.tsv.gz
