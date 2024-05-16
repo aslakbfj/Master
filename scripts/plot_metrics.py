@@ -97,8 +97,8 @@ def cli(**args):
 
     # Get training DataLoader
     data_loader = get_data_loader(seqs, labels, train_args["batch_size"])
-    # Remove "AS-TAC-peaks/AtlanticSalmon_ATAC_" and ".mLb.clN_peaks.narrowPeak" from the strings in labels list
-    target_labels = [label.replace("AS-TAC-peaks/AtlanticSalmon_ATAC_", "").replace(".mLb.clN_peaks.narrowPeak", "") for label in target_labels]
+    # Remove and shorten the label names
+    target_labels = [label.replace("AS-TAC-merged_peaks/AtlanticSalmon_ATAC_", "").replace("AS-TAC-peaks/AtlanticSalmon_ATAC_","").replace(".mRp.clN_peaks.narrowPeak", "").replace("Immature","I").replace("Mature","M").replace("Somitogenesis","S").replace("Gastrulation","G").replace("Blastulation","B").replace("Male","M").replace("Female","F") for label in target_labels]
 
 
     labels_E, outputs_E = test.run_test(explainn, data_loader, device)
