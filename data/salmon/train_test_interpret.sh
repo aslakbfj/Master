@@ -16,8 +16,8 @@ TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
 
 #/mnt/SCRATCH/asfj/AS-TAC/AS-TAC_21_25_train.tsv
-TRAIN_TSV=${DATA_DIR}/AS-TAC_noMuscle_21_25_train.tsv
-TEST_TSV=${DATA_DIR}/AS-TAC_noMuscle_21_25_test.tsv
+TRAIN_TSV=${DATA_DIR}/AS-TAC_merged_21_25_train.tsv
+TEST_TSV=${DATA_DIR}/AS-TAC_merged_21_25_test.tsv
 
 # Retrieve which tsv the model was trained on
 # i.e. 21_25 and so on, where chrom 21 and 25 are test set
@@ -81,7 +81,7 @@ ${PY_SCRIPT} -c 8 -o ${OUT_DIR}/tomtom ${OUT_DIR}/filters.meme \
 #${OUT_DIR}/clusters/clusters.meme \ #
 
 gzip -d ${OUT_DIR}/tomtom/tomtom.tsv.gz
-sbatch plot_metrics.sh ${1}_units_${TSV_VARIANT} bed_list_noMuscle.txt
+sbatch plot_metrics.sh ${1}_units_${TSV_VARIANT} bed_list_merged.txt
 #z grep -e MA0069.1 -e MA0102.4 ${OUT_DIR}/tomtom/tomtom.tsv.gz
 
 #### More complex visualization can be achieved by using Jupyter notebooks (or similar)
