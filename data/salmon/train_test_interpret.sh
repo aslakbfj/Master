@@ -68,6 +68,9 @@ ${TRAIN_TSV}
 # PY_SCRIPT=../../scripts/utils/meme2logo.py
 # ${PY_SCRIPT} -c 8 -f png -o ${OUT_DIR}/logos ${OUT_DIR}/clusters/clusters.meme
 
+ echo "Obtain a logo for each filter in PNG format (option -f)"
+PY_SCRIPT=../../scripts/utils/meme2logo.py
+${PY_SCRIPT} -c 8 -f png -o ${OUT_DIR}/logos ${OUT_DIR}/filters.meme
 
 echo "Visualize the logos of CEBP and PAX clusters (i.e., highlighted in the preprint)"
 
@@ -77,6 +80,7 @@ ${PY_SCRIPT} -c 8 -o ${OUT_DIR}/tomtom ${OUT_DIR}/filters.meme \
 ../JASPAR/JASPAR2024_CORE_vertebrates_non-redundant_pfms_meme.txt
 #${OUT_DIR}/clusters/clusters.meme \ #
 
+gzip -d ${OUT_DIR}/tomtom/tomtom.tsv.gz
 sbatch plot_metrics.sh ${1}_units_${TSV_VARIANT} bed_list_noMuscle.txt
 #z grep -e MA0069.1 -e MA0102.4 ${OUT_DIR}/tomtom/tomtom.tsv.gz
 
