@@ -158,6 +158,13 @@ CONTEXT_SETTINGS = {
     help="Constrain output weights to be non-negative (i.e. to ease interpretation).",
     is_flag=True,
 )
+@optgroup.option(
+    "--final-fc",
+    help="Extra fully connected layer after units.",
+    type=int,
+    default=0,
+    show_default=True
+)
 
 def cli(**args):
 
@@ -221,7 +228,7 @@ def cli(**args):
     # Get model and optimizer
     m = ExplaiNN(args["num_units"], args["input_length"], num_classes,
                  args["filter_size"], args["num_fc"], args["pool_size"],
-                 args["pool_stride"])
+                 args["pool_stride"], args["final_fc"])
 
     # Get optimizer
     o = _get_optimizer(args["optimizer"], m.parameters(), args["lr"])

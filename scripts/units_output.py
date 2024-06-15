@@ -138,11 +138,21 @@ def cli(**args):
     m = ExplaiNN(train_args["num_units"], train_args["input_length"],
                  num_classes, train_args["filter_size"], train_args["num_fc"],
                  train_args["pool_size"], train_args["pool_stride"],
+                 args["model_file"], return_unit_act=False)
+
+    # Transform
+    _transform(seqs, m, device, train_args["rev_complement"],
+          args["output_dir"], args["batch_size"])
+    
+    # Get model for alternative method
+    m2 = ExplaiNN(train_args["num_units"], train_args["input_length"],
+                 num_classes, train_args["filter_size"], train_args["num_fc"],
+                 train_args["pool_size"], train_args["pool_stride"],
                  args["model_file"], return_unit_act=True)
 
-    # Test
-    _test(seqs, labels, m, device, input_type, train_args["rev_complement"],
-          args["output_dir"], args["batch_size"])
+    # Transform again for alternative method
+
+
 
     # Finish execution
     seconds = format(time.time() - start_time, ".2f")
@@ -154,7 +164,7 @@ def cli(**args):
         handle.close()
     print(f"Execution time {seconds} seconds")
 
-def _transform(seqs, labels, model, device, input_type, rev_complement,
+def _transform(seqs, model, device, rev_complement,
           output_dir="./", batch_size=100):
 
     # Initialize
@@ -183,12 +193,34 @@ def _transform(seqs, labels, model, device, input_type, rev_complement,
         unit_act = get_explainn_unit_outputs(dl, model, device)
         activations.append(unit_act)
 
-    tsv_file = os.path.join(output_dir, "performance-metrics.tsv")
-    
-    df = pd.DataFrame(data, columns=column_names)
+    tsv_file = os.path.join(output_dir, "unit-ouputs.tsv")
+    print(activations.shape)
+    df = pd.DataFrame(activations)
     df.to_csv(tsv_file, sep="\t", index=False)
 
+def run_transform(model, data_loader, device, isSigmoid=False):
+    """
 
+    :param model: ExplaiNN model
+    :param data_loader: torch DataLoader, data loader with the sequences of interest
+    :param device: current available device ('cuda:0' or 'cpu')
+    :param isSigmoid: boolean, True if the model output is binary
+    :return:
+    """
+    output_dir = "./"
+    tsv_file = os.path.join(output_dir, "unit-ouputs.tsv")
+    running_outputs = []
+    sigmoid = nn.Sigmoid()
+    with torch.no_grad():
+        for seq in data_loader:
+            seq = seq.to(device)
+            out = model(seq)
+            out = out.detach().cpu()
+            if isSigmoid:
+                out = sigmoid(out)
+            running_outputs.extend(out.numpy())
+    df=pd.DataF rame(np.array(running_outputs))
+    df.to_csv(tsv_file, sep="\t", index=False)
 
 if __name__ == "__main__":
     cli()

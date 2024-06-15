@@ -10,7 +10,8 @@
 
 
 source activate explainn
-# num-units as argument!
+# num-units as argument!!
+# num final fc units as argument!!
 DATA_DIR=$SCRATCH/AS-TAC
 TRAIN_SCRIPT=../../scripts/train.py
 TEST_SCRIPT=../../scripts/test.py
@@ -27,12 +28,20 @@ TSV_VARIANT=${prefix_removed%_*}  # Remove the suffix after the last underscore
 
 
 OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${TSV_VARIANT}"
-
+PLOT_METRICS_INPUT="${1}_units_${TSV_VARIANT}"
+FC=0
+# if there is a second argument, do:
+IF [ -n "$2" ]; THEN
+    OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${2}_final_fc_${TSV_VARIANT}"
+    PLOT_METRICS_INPUT="${1}_units_${2}_final_fc_${TSV_VARIANT}"
+    FC=${2}
+fi
 
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
 
 ${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 --patience 10 \
+--final_fc ${FC} \
 --num-epochs 200 \
 --lr 0.005 \
 --batch-size 100 \
@@ -56,6 +65,7 @@ ${INTERPRET_SCRIPT} -t -o ${OUT_DIR} --correlation 0.75 --num-well-pred-seqs 100
 ${PTH_FILE} ${OUT_DIR}/parameters-train.py.json \
 ${TRAIN_TSV}
 
+ACT_TRANSFORM_SCRIPT=../../scripts/unit_output.py
 
 # Uncomment for clustering
 # echo "Cluster the filters (i.e., remove redundancy)"
@@ -79,6 +89,7 @@ ${PY_SCRIPT} -c 8 -o ${OUT_DIR}/tomtom ${OUT_DIR}/filters.meme \
 #${OUT_DIR}/clusters/clusters.meme \ #
 
 gzip -d ${OUT_DIR}/tomtom/tomtom.tsv.gz
+# the input for plot_metrics.sh are the output folder and bed list type
 sbatch plot_metrics.sh ${1}_units_${TSV_VARIANT} bed_list_merged.txt
 #z grep -e MA0069.1 -e MA0102.4 ${OUT_DIR}/tomtom/tomtom.tsv.gz
 
