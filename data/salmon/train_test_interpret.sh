@@ -29,8 +29,6 @@ TSV_VARIANT=${prefix_removed%_*}  # Remove the suffix after the last underscore
 OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${TSV_VARIANT}"
 
 
-# withdraw 21_25 from TRAIN_TSV
-
 echo "Train (same parameters as in the preprint; it can take a few hours) and test"
 
 ${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \

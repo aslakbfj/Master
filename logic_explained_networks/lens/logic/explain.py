@@ -1,4 +1,4 @@
-import collections
+import collections.abc
 from typing import List
 
 import numpy as np

@@ -81,7 +81,7 @@ def get_explainn_predictions(data_loader, model, device, isSigmoid=False):
 
 def get_explainn_unit_outputs(data_loader, model, device):
     """
-    Function to get predictions and true labels for all sequences in the given data loader
+    Function to get unit outputs all sequences in the given data loader
     :param data_loader: torch DataLoader, data loader with the sequences of interest
     :param model: ExplaiNN model
     :param device: current available device ('cuda:0' or 'cpu')

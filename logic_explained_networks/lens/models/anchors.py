@@ -1,4 +1,4 @@
-import collections
+import collections.abc
 import time
 import warnings
 from multiprocessing import Pool

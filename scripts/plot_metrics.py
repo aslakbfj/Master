@@ -60,7 +60,7 @@ def cli(**args):
     # if "training_file" in train_args: # i.e. for fine-tuned models
     #     handle = get_file_handle(train_args["training_file"], "rt")
     #     train_args = json.load(handle)
-    #     handle.close()
+    #     handle.close()    
     #     # Else, show an error message
     # else:
     #     print("No training_file key in the model directory.")

@@ -46,7 +46,7 @@ class ExplaiNN(nn.Module):
     The ExplaiNN model (PMID: 37370113)
     """
     def __init__(self, num_cnns, input_length, num_classes, filter_size=19, num_fc=2, pool_size=7, pool_stride=7,
-                 weight_path=None):
+                 weight_path=None, final_fc=0, return_unit_act=False):
         """
         :param num_cnns: int, number of independent cnn units
         :param input_length: int, input sequence length
@@ -56,6 +56,8 @@ class ExplaiNN(nn.Module):
         :param pool_size: int, size of the unit's maxpooling layer, default=7
         :param pool_stride: int, stride of the unit's maxpooling layer, default=7
         :param weight_path: string, path to the file with model weights
+        :param final_fc: int, number of FC layers after the CNN units, default=0
+        :param return_unit_act: bool, if `True`, forward return unit outputs
         """
         super(ExplaiNN, self).__init__()
 
@@ -67,7 +69,9 @@ class ExplaiNN(nn.Module):
             "num_fc": num_fc,
             "pool_size": pool_size,
             "pool_stride": pool_stride,
-            "weight_path": weight_path
+            "weight_path": weight_path,
+            "final_fc": final_fc,
+            "return_unit_act": return_unit_act
         }
 
         if num_fc == 0:
@@ -144,7 +148,32 @@ class ExplaiNN(nn.Module):
                                              nn.ReLU(),
                                              nn.Flatten())
 
-        self.final = nn.Linear(num_cnns, num_classes)
+        if final_fc == 0:
+            self.final = nn.Linear(num_cnns, num_classes)
+        elif final_fc == 1:
+            self.final = nn.Sequential(
+            nn.Linear(num_cnns, num_cnns),
+            nn.ReLU(),
+            nn.Linear(num_cnns, num_classes))
+        elif final_fc == 2:
+            self.final = nn.Sequential(
+            nn.Linear(num_cnns, num_cnns),
+            nn.ReLU(),
+            nn.Linear(num_cnns, num_cnns),
+            nn.ReLU(),
+            nn.Linear(num_cnns, num_classes))
+        else:
+            # max 3 final FC layers
+            self.final = nn.Sequential(
+            nn.Linear(num_cnns, num_cnns),
+            nn.ReLU(),
+            nn.Linear(num_cnns, num_cnns),
+            nn.ReLU(),
+            nn.Linear(num_cnns, num_cnns),
+            nn.ReLU(),
+            nn.Linear(num_cnns, num_classes))
+
+
 
         if weight_path:
             self.load_state_dict(torch.load(weight_path))
@@ -159,6 +188,9 @@ class ExplaiNN(nn.Module):
                 outs = self.linears_bg[i](outs)
             outs = self.last_linear(outs)
         out = self.final(outs)
+        
+        if self._options["return_unit_act"]:
+            return outs
         return out
 
 ###############################################################################
