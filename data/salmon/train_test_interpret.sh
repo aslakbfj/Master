@@ -31,7 +31,7 @@ OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${TSV_VARIANT}"
 PLOT_METRICS_INPUT="${1}_units_${TSV_VARIANT}"
 FC=0
 # if there is a second argument, do:
-IF [ -n "$2" ]; THEN
+if [ -n "$2" ]; then
     OUT_DIR="$SCRATCH/AS-TAC/ExplaiNN/single_train/${1}_units_${2}_final_fc_${TSV_VARIANT}"
     PLOT_METRICS_INPUT="${1}_units_${2}_final_fc_${TSV_VARIANT}"
     FC=${2}
