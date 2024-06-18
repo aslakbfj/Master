@@ -143,6 +143,15 @@ def cli(**args):
     # Transform
     _transform(seqs, m, device, train_args["rev_complement"],
           args["output_dir"], args["batch_size"])
+    
+    # Get model for alternative method
+    m2 = ExplaiNN(train_args["num_units"], train_args["input_length"],
+                 num_classes, train_args["filter_size"], train_args["num_fc"],
+                 train_args["pool_size"], train_args["pool_stride"],
+                 args["model_file"], return_unit_act=True)
+
+    # Transform again for alternative method
+
 
 
     # Finish execution
@@ -189,6 +198,30 @@ def _transform(seqs, labels, model, device, rev_complement,
     tsv_file = os.path.join(output_dir, "unit-ouputs.tsv")
     print(activations.shape)
     df = pd.DataFrame(activations)
+    df.to_csv(tsv_file, sep="\t", index=False)
+
+def run_transform(model, data_loader, device, isSigmoid=False):
+    """
+
+    :param model: ExplaiNN model
+    :param data_loader: torch DataLoader, data loader with the sequences of interest
+    :param device: current available device ('cuda:0' or 'cpu')
+    :param isSigmoid: boolean, True if the model output is binary
+    :return:
+    """
+    output_dir = "./"
+    tsv_file = os.path.join(output_dir, "unit-ouputs.tsv")
+    running_outputs = []
+    sigmoid = nn.Sigmoid()
+    with torch.no_grad():
+        for seq in data_loader:
+            seq = seq.to(device)
+            out = model(seq)
+            out = out.detach().cpu()
+            if isSigmoid:
+                out = sigmoid(out)
+            running_outputs.extend(out.numpy())
+    df=pd.DataFrame(np.array(running_outputs))
     df.to_csv(tsv_file, sep="\t", index=False)
 
 if __name__ == "__main__":

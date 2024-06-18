@@ -41,7 +41,7 @@ echo "Train (same parameters as in the preprint; it can take a few hours) and te
 
 ${TRAIN_SCRIPT} -o ${OUT_DIR} --input-length 1000 --criterion bcewithlogits \
 --patience 10 \
---final_fc ${FC} \
+--final-fc ${FC} \
 --num-epochs 200 \
 --lr 0.005 \
 --batch-size 100 \
